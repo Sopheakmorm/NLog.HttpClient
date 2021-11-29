@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>NLog.HttpClient</id>
+    <version>1.0.0</version>
+    <authors>SOPHEAK MORM</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Sopheakmorm/NLog.HttpClient.git</projectUrl>
+    <iconUrl>https://miro.medium.com/max/512/1*ofWDRDb2--pYN6frN0GqXA.png</iconUrl>
+    <description>An NLog target for HttpClient.</description>
+    <releaseNotes>First initialize of project.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>NLog HttpClient Webservice API WebAPI .NET .NETCore</tags>
+    <dependencies>
+      <group targetFramework="net472">
+        <dependency id="BouncyCastle" version="1.8.9" />
+        <dependency id="Newtonsoft.Json" version="13.0.1"/>
+        <dependency id="NLog" version="4.7.12" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
