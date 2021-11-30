@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog.Common;
 using NLog.Config;
@@ -10,11 +14,14 @@ using NLog.Targets;
 
 namespace NLog.HttpClient
 {
+
+
+
     /// <summary>
     /// NLog message target for HttpClient.
     /// </summary>
     [Target("HttpClient")]
-    public sealed class HttpClientTarget : TargetWithLayout
+    public sealed class HttpClientTarget : AsyncTaskTarget
     {
 
         #region Property
@@ -27,7 +34,7 @@ namespace NLog.HttpClient
         /// </value>
         [ArrayParameter(typeof(JsonField), "field")]
         public IList<JsonField> Fields { get; set; }
-        private Func<AsyncLogEventInfo, Dictionary<string, object>> _createDocumentDelegate;
+        private Func<LogEventInfo, Dictionary<string, object>> _createDocumentDelegate;
 
 
         [RequiredParameter]
@@ -37,6 +44,7 @@ namespace NLog.HttpClient
         [RequiredParameter]
         public string Auth { get; set; }
 
+        private static System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
         #endregion
 
         public HttpClientTarget()
@@ -44,29 +52,47 @@ namespace NLog.HttpClient
             Fields = new List<JsonField>();
         }
 
-        /// <summary>
-        /// Writes an array of logging events to the log target. By default it iterates on all
-        /// events and passes them to "Write" method. Inheriting classes can use this method to
-        /// optimize batch writes.
-        /// </summary>
-        /// <param name="logEvents">Logging events to be written out.</param>
-        protected override void Write(IList<AsyncLogEventInfo> logEvents)
+
+
+        protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
+        {
+            if (_createDocumentDelegate == null)
+                _createDocumentDelegate = e => CreateObject(e);
+
+            var documents = _createDocumentDelegate(logEvent);
+
+            var body = JsonConvert.SerializeObject(documents);
+
+            await SendData(body);
+        }
+
+        protected override async void Write(IList<AsyncLogEventInfo> logEvents)
+        {
+            if (_createDocumentDelegate == null)
+                _createDocumentDelegate = e => CreateObject(e);
+            var documents = logEvents.Select(info => _createDocumentDelegate);
+
+            var body = JsonConvert.SerializeObject(documents);
+
+            await SendData(body);
+        }
+
+        /*
+        protected override async Task WriteAsyncTask(IList<LogEventInfo> logEvents, CancellationToken cancellationToken)
         {
             if (logEvents.Count == 0)
                 return;
+
             try
             {
                 if (_createDocumentDelegate == null)
-                    _createDocumentDelegate = e => CreateObject(e.LogEvent);
+                    _createDocumentDelegate = e => CreateObject(e);
                 var documents = logEvents.Select(_createDocumentDelegate);
-
 
                 var body = JsonConvert.SerializeObject(documents);
 
-                SendData(body);
+                await SendData(body);
 
-                for (int i = 0; i < logEvents.Count; ++i)
-                    logEvents[i].Continuation(null);
             }
             catch (Exception ex)
             {
@@ -75,25 +101,19 @@ namespace NLog.HttpClient
                 if (ex.MustBeRethrownImmediately())
                     throw;
 
-                for (int i = 0; i < logEvents.Count; ++i)
-                    logEvents[i].Continuation(ex);
-
                 if (ex.MustBeRethrown())
                     throw;
             }
-        }
+        }*/
 
-        private void SendData(string jsonData)
+        private async Task SendData(string jsonData)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(Url);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Auth);
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            var reqMsg = new HttpRequestMessage(HttpMethod.Post, Url)
             {
-                streamWriter.Write(jsonData);
-            }
-            httpWebRequest.GetResponse();
+                Content = new StringContent(jsonData,Encoding.UTF8, "application/json")
+            };
+            reqMsg.Headers.Add("Authorization", "Bearer " + Auth);
+            await _client.SendAsync(reqMsg);
         }
         private Dictionary<string, object> CreateObject(LogEventInfo logEvent)
         {
