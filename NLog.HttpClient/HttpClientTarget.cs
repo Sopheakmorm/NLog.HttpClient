@@ -51,9 +51,7 @@ namespace NLog.HttpClient
         {
             Fields = new List<JsonField>();
         }
-
-
-
+        
         protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
         {
             if (_createDocumentDelegate == null)
