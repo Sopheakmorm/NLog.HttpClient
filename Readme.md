@@ -3,6 +3,7 @@ NLog.HttpClient
 
 An implementation of the NLog by sending the log using HttpClient in custom functionalities.
 
+[![Version](https://badge.fury.io/nu/NLog.Telegram.Format.svg)](https://www.nuget.org/packages/NLog.HttpClient)
 ------------
 
 Usage
