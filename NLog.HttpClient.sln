@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.HttpClient.Test", "NLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NLogHttpServer", "NLogHttpServer\NLogHttpServer.csproj", "{697AA458-3F70-4ED7-9DDC-BF75357FDF04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.HttpClient.Abstract", "NLog.HttpClient.Abstract\NLog.HttpClient.Abstract.csproj", "{6EC0334C-C704-4265-A2E2-29A21FD1C6D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{697AA458-3F70-4ED7-9DDC-BF75357FDF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{697AA458-3F70-4ED7-9DDC-BF75357FDF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{697AA458-3F70-4ED7-9DDC-BF75357FDF04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EC0334C-C704-4265-A2E2-29A21FD1C6D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EC0334C-C704-4265-A2E2-29A21FD1C6D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EC0334C-C704-4265-A2E2-29A21FD1C6D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EC0334C-C704-4265-A2E2-29A21FD1C6D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
