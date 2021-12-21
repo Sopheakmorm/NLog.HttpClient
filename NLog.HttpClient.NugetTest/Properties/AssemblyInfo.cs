@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NLog.HttpClient.Abstract")]
-[assembly: AssemblyDescription("An implementation of the NLog by sending the log using HttpClient in custom functionalities.")]
+[assembly: AssemblyTitle("NLog.HttpClient.NugetTest")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NLog.HttpClient.Abstract")]
+[assembly: AssemblyProduct("NLog.HttpClient.NugetTest")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c41cc52c-a7fd-4bf8-92bb-88327ee7ead9")]
+[assembly: Guid("3566de6e-08c0-4267-8adc-4a68ec1a2c49")]
 
 // Version information for an assembly consists of the following four values:
 //
