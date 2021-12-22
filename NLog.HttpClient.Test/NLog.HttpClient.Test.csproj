@@ -72,6 +72,10 @@
       <Project>{6ec0334c-c704-4265-a2e2-29a21fd1c6d3}</Project>
       <Name>NLog.HttpClient.Abstract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NLog.HttpClient\NLog.HttpClient.csproj">
+      <Project>{c41cc52c-a7fd-4bf8-92bb-88327ee7ead9}</Project>
+      <Name>NLog.HttpClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

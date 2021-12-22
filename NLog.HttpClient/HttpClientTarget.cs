@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,7 +22,7 @@ namespace NLog.HttpClient
     /// NLog message target for HttpClient.
     /// </summary>
     [Target("HttpClient")]
-    public sealed class HttpClientTarget : AsyncTaskTarget
+    public sealed class HttpClientTarget : Target
     {
 
         #region Property
@@ -52,8 +53,9 @@ namespace NLog.HttpClient
             Fields = new List<JsonField>();
         }
         
-        protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
+        protected override async void Write(LogEventInfo logEvent)
         {
+            InternalLogger.Debug("send log WriteAsyncTask");
             if (_createDocumentDelegate == null)
                 _createDocumentDelegate = e => CreateObject(e);
 
@@ -66,6 +68,8 @@ namespace NLog.HttpClient
 
         protected override async void Write(IList<AsyncLogEventInfo> logEvents)
         {
+            InternalLogger.Debug("send log Write");
+
             if (_createDocumentDelegate == null)
                 _createDocumentDelegate = e => CreateObject(e);
             var documents = logEvents.Select(info => _createDocumentDelegate);
@@ -106,6 +110,8 @@ namespace NLog.HttpClient
 
         private async Task SendData(string jsonData)
         {
+            InternalLogger.Debug("send log");
+
             var reqMsg = new HttpRequestMessage(HttpMethod.Post, Url)
             {
                 Content = new StringContent(jsonData,Encoding.UTF8, "application/json")
@@ -151,6 +157,5 @@ namespace NLog.HttpClient
                     return value;
             }
         }
-
     }
 }

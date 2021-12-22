@@ -15,13 +15,18 @@ namespace NLog.HttpClient.Test
     {
         static void Main(string[] args)
         {
-            var log = LogManager.GetCurrentClassLogger();
+            var log = LogManager.GetLogger("test");
             while (true)
             {
                 log.Debug(Console.ReadLine());
             }
         }
     }
+}
+
+
+namespace MyNamespace
+{
 
     /// <summary>
     /// NLog message target for HttpClient.
