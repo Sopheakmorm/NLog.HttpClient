@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog.HttpClient.Abstract;
+using NLog.Targets;
 
 namespace NLog.HttpClient.Test
 {
@@ -22,9 +23,13 @@ namespace NLog.HttpClient.Test
         }
     }
 
+    /// <summary>
+    /// NLog message target for HttpClient.
+    /// </summary>
+    [Target("HttpClientImplementation")]
     public class NLogHttpClientConcrete : HttpClientAbstract
     {
-        private static string Url = "your webservice url";
+        private static string Url = "https://localhost:5001/api/logs";
         private static string Auth = "your webservice auth key";
         private static System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
         protected override async Task SendObjectAsync(object data)

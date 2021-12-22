@@ -16,7 +16,7 @@ namespace NLog.HttpClient.Abstract
     /// NLog message target for HttpClient.
     /// </summary>
     [Target("HttpClientAbstract")]
-    public abstract class HttpClientAbstract : AsyncTaskTarget
+    public class HttpClientAbstract : AsyncTaskTarget
     {
 
         #region Property
@@ -54,16 +54,19 @@ namespace NLog.HttpClient.Abstract
             await SendCollectionAsync(documents);
         }
 
-        protected abstract Task SendObjectAsync(object data);
-        protected abstract Task SendCollectionAsync(IEnumerable<object> data);
-        /*{
-            var reqMsg = new HttpRequestMessage(HttpMethod.Post, Url)
-            {
-                Content = new StringContent(jsonData,Encoding.UTF8, "application/json")
-            };
-            reqMsg.Headers.Add("Authorization", "Bearer " + Auth);
-            await _client.SendAsync(reqMsg);
-        }*/
+        protected virtual Task SendObjectAsync(object data)
+        {
+            // todo sending log
+
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task SendCollectionAsync(IEnumerable<object> data)
+        {
+            // todo sending log
+
+            return Task.CompletedTask;
+        }
         private Dictionary<string, object> CreateObject(LogEventInfo logEvent)
         {
             var document = new Dictionary<string, object>();

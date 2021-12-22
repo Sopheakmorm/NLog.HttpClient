@@ -16,7 +16,6 @@ namespace NLog.HttpClient.NugetTest
     }
 
 
-    /*
     public class NLogHttpClientConcrete : HttpClientAbstract
     {
         private static string Url = "your webservice url";
@@ -41,5 +40,5 @@ namespace NLog.HttpClient.NugetTest
             reqMsg.Headers.Add("Authorization", "Bearer " + Auth);
             await _client.SendAsync(reqMsg);
         }
-    }*/
+    }
 }
